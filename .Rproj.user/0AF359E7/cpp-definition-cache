@@ -1,0 +1,232 @@
+[
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/S_eigen.cpp",
+        "file_last_write": 1505749270.0,
+        "definitions": [
+            {
+                "usr": "c:@F@S_eigen#$@N@arma@S@Mat>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "S_eigen(arma::mat)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/S_eigen.cpp",
+                "line": 15,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/bootstrap.cpp",
+        "file_last_write": 1551189897.0,
+        "definitions": [
+            {
+                "usr": "c:@F@bootLoop#$@N@arma@S@Mat>#d#I#I#d#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "bootLoop(arma::mat, int, int, double, bool)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/bootstrap.cpp",
+                "line": 21,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@bootstrapCpp#$@N@arma@S@Mat>#d#I#d#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "bootstrapCpp(arma::mat, int, double, bool)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/bootstrap.cpp",
+                "line": 82,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.cpp",
+        "file_last_write": 1510652892.0,
+        "definitions": [
+            {
+                "usr": "c:@F@logLik#$@N@arma@S@Mat>#d#S0_#$@N@arma@S@Col>#d#S0_#S0_#S0_#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "logLik(arma::mat, arma::mat, arma::vec, arma::mat, arma::mat, arma::mat, arma::mat)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.cpp",
+                "line": 13,
+                "column": 8
+            },
+            {
+                "usr": "c:@F@M#$@N@arma@S@Mat>#d#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "M(arma::mat, arma::mat)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.cpp",
+                "line": 25,
+                "column": 5
+            },
+            {
+                "usr": "c:@F@S#$@N@arma@S@Mat>#d#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "S(arma::mat, arma::mat)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.cpp",
+                "line": 39,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@M_perp#$@N@arma@S@Mat>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "M_perp(arma::mat)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.cpp",
+                "line": 52,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@M_bar#$@N@arma@S@Mat>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "M_bar(arma::mat)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.cpp",
+                "line": 69,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johaTools.h",
+        "file_last_write": 1467902739.0,
+        "definitions": []
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johansen.cpp",
+        "file_last_write": 1551184509.0,
+        "definitions": [
+            {
+                "usr": "c:@F@vecm#$@N@arma@S@Mat>#d#I#S0_#S0_#b#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "vecm(arma::mat, int, arma::mat, arma::mat, bool, double)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johansen.cpp",
+                "line": 15,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@var#$@N@arma@S@Mat>#d#b#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "var(arma::mat, bool, double)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johansen.cpp",
+                "line": 221,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@johansenCpp#$@N@arma@S@Mat>#d#I#S0_#S0_#b#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "johansenCpp(arma::mat, int, arma::mat, arma::mat, bool, double)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johansen.cpp",
+                "line": 289,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/johansen.h",
+        "file_last_write": 1510654624.0,
+        "definitions": []
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/misc.cpp",
+        "file_last_write": 1505898380.0,
+        "definitions": [
+            {
+                "usr": "c:@F@display_progress#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "display_progress(double)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/misc.cpp",
+                "line": 12,
+                "column": 6
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/misc.h",
+        "file_last_write": 1505824718.0,
+        "definitions": []
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/sampleVAR1.cpp",
+        "file_last_write": 1507021370.0,
+        "definitions": [
+            {
+                "usr": "c:@F@sampleVAR1#I#$@N@arma@S@Col>#d#$@N@arma@S@Mat>#d#S0_#S1_#S1_#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "sampleVAR1(int, arma::vec, arma::mat, arma::vec, arma::mat, arma::mat, double)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/sampleVAR1.cpp",
+                "line": 21,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/testCpp.cpp",
+        "file_last_write": 1507209612.0,
+        "definitions": [
+            {
+                "usr": "c:@F@test_vecm#$@N@arma@S@Mat>#d#I#S0_#S0_#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "test_vecm(arma::mat, int, arma::mat, arma::mat, double)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/testCpp.cpp",
+                "line": 16,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/tools.cpp",
+        "file_last_write": 1467900064.0,
+        "definitions": [
+            {
+                "usr": "c:@F@phase#$@N@arma@S@Col>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "phase(arma::vec)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/tools.cpp",
+                "line": 9,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@amplitude#$@N@arma@S@Col>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "amplitude(arma::vec)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/tools.cpp",
+                "line": 21,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@polarToXY#$@N@arma@S@Col>#d#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "polarToXY(arma::vec, arma::vec)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/tools.cpp",
+                "line": 32,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@sgn#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "sgn(int)",
+                "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/tools.cpp",
+                "line": 43,
+                "column": 5
+            }
+        ]
+    },
+    {
+        "file": "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/HiDimCI/src/tools.h",
+        "file_last_write": 1467900091.0,
+        "definitions": []
+    }
+]

@@ -1,0 +1,512 @@
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 3,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 3,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 3,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 10        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 10        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 10        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 10        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 10        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 50,dt = 1)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+library(HiDimCI)
+library(misc)
+library(Matrix)
+# library(cods)
+set.seed(1)
+clean_slate()
+filelib = "~/Google Drive/GitHub/Source/R/High-Dim Cointegration/"
+setwd(filelib)
+notifyON = TRUE
+savePDF  = FALSE
+N     = 2000      # number of observations
+p     = 50        # matrix dimension
+r     = floor(0.4*p)
+cat("\n")
+source("Sim study tools.R")
+# Sample a process with sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=TRUE)
+B.sparse    = Btmp$B
+r.sparse    = Btmp$r
+# Sample a process with non-sparse low-rank interaction
+Btmp        = makeB(p,r,sparse=FALSE)
+B.nonsparse = Btmp$B
+r.nonsparse = Btmp$r
+# Sample a process with no interaction (multivariate independent random walks)
+B0 = matrix(0,nr=p,nc=p)
+X0 = sampleX(B0,N)
+X.sparse    = sampleX(B.sparse,N)
+X.nonsparse = sampleX(B.nonsparse,N)
+# johatest = HiDimCI::johansen(X.nonsparse,r=1,diag(p), diag(p),dt=1)
+boottest = HiDimCI::bootstrap(X.nonsparse,B = 4,dt = 1)
+library(HiDimCI)
+p=2
+p=2
+d=2
+a = 1/(d-1)
+b = a/(d-1)
+tmp = numeric(d)
+Tmp = matrix(nr=d,nc=d)
+for(i in 1:d){
+tmp[i] = -a
+tmp[-i] = b
+Tmp[i,] = tmp
+}
+Tmp
+out = matrix(0,nr=p,nc=p)
+out = Tmp
+(floor(p/d)-1)
+for(i in 1:(floor(p/d)-1))
+out = Matrix::bdiag(out,Tmp)
+out
+1:(floor(p/d)-1)
+p=2
+d=2
+a = 1/(d-1)
+b = a/(d-1)
+tmp = numeric(d)
+Tmp = matrix(nr=d,nc=d)
+for(i in 1:d){
+tmp[i] = -a
+tmp[-i] = b
+Tmp[i,] = tmp
+}
+out = matrix(0,nr=p,nc=p)
+out = Tmp
+if(d!=p){
+for(i in 1:(floor(p/d)-1))
+out = Matrix::bdiag(out,Tmp)
+}
+out
+library(HiDimCI)
+p=12
+d=8
+a = 1/(d-1)
+b = a/(d-1)
+tmp = numeric(d)
+Tmp = matrix(nr=d,nc=d)
+for(i in 1:d){
+tmp[i] = -a
+tmp[-i] = b
+Tmp[i,] = tmp
+}
+out = matrix(0,nr=p,nc=p)
+out = Tmp
+out
+d<p
+(floor(p/d)-1)
+p/2
+d<p/2
+if(d<p/2){
+for(i in 1:(floor(p/d)-1))
+out = Matrix::bdiag(out,Tmp)
+}
+if(ncol(out)!=p){
+for(i in 1:(p-ncol(out))){
+out = Matrix::bdiag(out,0)
+}
+}
+out
+library(HiDimCI)
+library(HiDimCI)

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Different variations of the 'B' matrix\n\nKuramoto.matrix <- function(p,d, sparse=FALSE, r.sparse=NULL, scramble=FALSE){\n  # A Kuramoto type block matrix where 'p' is the desired dimension of the matrix\n  # and 'd' the desired size of each block.\n  # Within each block, the diagonal value corresponds to the sum of the off-diagonal row entries,\n  # and with opposite signs, such that row sums are always zero.\n  # When p mod d is non zero, the matrix is padded with zeros in the lower right to be p-times-p.\n  # The input \"scramble\" will randomly interchange rows.\n\n  if(sum(d)>p){\n    p = sum(d)\n  }\n\n  out = matrix(0,nr=p,nc=p)\n\n  if(length(d)>1){\n    out = matrix(NA,nr=0,nc=0)\n    for(j in 1:length(d)){\n      out = Matrix::bdiag(out,Kuramoto.matrix(d[j],d[j]))\n    }\n  } else{\n    if(d>1){\n      a = 1/(d-1)\n      b = a/(d-1)\n      tmp = numeric(d)\n      Tmp = matrix(nr=d,nc=d)\n      for(i in 1:d){\n        tmp[i] = -a\n        tmp[-i] = b\n        Tmp[i,] = tmp\n      }\n    } else{\n      Tmp = as.matrix(0)\n    }\n    out = Tmp\n    if(d<p/2){\n      for(i in 1:(floor(p/d)-1))\n        out = Matrix::bdiag(out,Tmp)\n    }\n  }\n\n  if(ncol(out)!=p){\n    for(i in 1:(p-ncol(out))){\n      out = Matrix::bdiag(out,0)\n    }\n  }\n\n  if(sparse){\n    tmp.sparse = Matrix::rsparsematrix(p, p, nnz = r.sparse, symmetric=TRUE)\n    out[tmp.sparse==0] = 0\n  }\n\n  if(scramble){\n    out = out[sample(nrow(out)),]\n  }\n\n  return(out)\n}\n\n\nbimodal.matrix <- function(p,r.sparse,mu1=5, mu2=-5,sig=1, sparse=TRUE){\n  # This function returns a sparse matrix where the entries are bimodal normal distributed\n  rbimodal <- function(n,mu1=5,mu2=-5, sig=1){\n    tmp = rnorm(n)\n    for(i in 1:n){\n      if(sign(tmp[i])>0){\n        tmp[i] = rnorm(1,mean = mu1, sd=sig)\n      } else if(sign(tmp[i])<0){\n        tmp[i] = rnorm(1,mean = mu2, sd=sig)\n      } else{\n        tmp[i] = 0\n      }\n    }\n    return(tmp)\n  }\n\n  if(sparse)\n    out = Matrix::rsparsematrix(p, p, nnz = r.sparse,  rand.x = rbimodal, symmetric=TRUE)\n  return(out)\n}\n\n\n\n\n\nmake.low.rank <- function(M, r){\n  # This function takes a matrix and reduces the rank via a singular-value-decomposition\n\n  SVD = svd(M)\n  # Symmetric matrix (such that all eigenvalues are real...)\n  out = as.matrix((SVD$u[,1:r]%*%diag(SVD$d[1:r]))%*%t(SVD$u[,1:r]))\n\n  return(out)\n}\n\nmake.sparse <- function(M, r.sparse){\n  # This function takes a matrix and make it sparse...\n  p = ncol(M)\n  tmp.sparse = Matrix::rsparsematrix(p, p, nnz = r.sparse, symmetric=TRUE)\n  M[as.matrix(tmp.sparse==0)] = 0\n\n  return(M)\n}\n\n",
+    "created" : 1551793325492.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3577862941",
+    "id" : "6E09B93B",
+    "lastKnownWriteTime" : 1508670211,
+    "last_content_update" : 1508670211,
+    "path" : "~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/R/Make B matrix.R",
+    "project_path" : "R/Make B matrix.R",
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

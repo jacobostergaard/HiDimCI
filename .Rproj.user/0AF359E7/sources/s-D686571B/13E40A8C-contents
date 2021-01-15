@@ -1,0 +1,43 @@
+
+A
+# theta er 16x1
+O = (1:16)/16
+B = A[tmp$ord, tmp$ord]
+image(A)
+image(B)
+inv_ord = sort(tmp$ord, index.return=TRUE)$ix
+C = B[inv_ord,inv_ord]
+
+cls_size = apply(Z, 1, function(x) sum(!is.na(x)))
+
+O[which(cls_size == 1)] = 0
+tmp = rep(O, cls_size)
+B   = A %*% diag(tmp)
+
+
+eigen(A)
+
+K = Kuramoto.matrix(10,3)
+rankMatrix(K)
+e = eigen(-K)$values
+e[1:6]
+
+
+
+O[which(tmp$p == 1)] = 0
+tmp2 = rep(O, tmp$p)
+B = A%*%diag(tmp2[tmp$inv_ord])
+
+
+df = (p^2+p)/2-16
+X2 = (logL(X,B)-logL(X,P.sym))
+1-pchisq(X2,df)
+
+-2logQ
+-2*(logL(X,B)-logL(X,P.sym))
+image(b.test$B-B[tmp$ord,tmp$ord])
+image(B[tmp$ord, tmp$ord])
+image(b.test$B)
+par(mfrow=c(2,1))
+plot(as.numeric(b.test$B-B[tmp$ord,tmp$ord]), ylim=c(-.2,.2))
+plot(as.numeric(b.test$B-P.sym[tmp$ord,tmp$ord]), ylim=c(-.2,.2))

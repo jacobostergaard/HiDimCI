@@ -1,0 +1,84 @@
+plot_matrix <- function(M, colrange=c(-.25,.1), colbar=NULL){
+  # This function can plot adjencency matrices with an assymetrical colorscale
+
+  # Find indices of pos/neg entries in the matrix and define pos,neg and zero matrices.
+  idx.pos = which(M>0)
+  idx.neg = which(M<0)
+  M.neg = M; M.neg[idx.pos] = NA
+  M.pos = M; M.pos[idx.neg] = NA
+  M.zero = 0*M; M.zero[sort(c(idx.pos,idx.neg))]=NA
+
+  # Define colors for pos/neg entrie (zero entrie will be white)
+  # col.pos = colorRampPalette(RColorBrewer::brewer.pal(n = 9,name = "Blues"))(10000)
+  col.pos = colorRampPalette(c("white","steelblue"))(10000)
+  # col.neg = colorRampPalette(RColorBrewer::brewer.pal(n = 9,name = "Reds"))(10000)
+  col.neg = colorRampPalette(c("white","tomato2"))(10000)
+  cbar = c(rev(col.neg),col.pos) # neg color scale must be reversed
+
+  # if colorrange is within allowed bounds, use cutoff values based on input M range:
+  # for positive entries...
+  if(max(M.pos[!is.na(M.pos)])/max(colrange)<1){
+    col.pos = col.pos[1:ceiling(10000*max(M.pos[!is.na(M.pos)])/max(colrange))]
+  }
+  # ... and for negative entries
+  if(min(M.neg[!is.na(M.neg)])/min(colrange)<1){
+    col.neg = col.neg[1:ceiling(10000*min(M.neg[!is.na(M.neg)])/min(colrange))]
+  }
+  # reverse the negative colorscale (so more negative colors are darker)
+  col.neg = rev(col.neg)
+
+  # Remove current plots (this is to avoid messing up in plots superimposed on plots...)
+  # if(!is.null(dev.list())){
+  #   dev.off()
+  # }
+
+  # # Set plot environment
+  # if(!keep.layout){
+  #   par(new=FALSE, mar=c(.5,.5,.5,0), oma=c(0,0,0,0), bg=add.alpha('black',.1), bty='n')
+  #   layout(matrix(1:2, nc=2), width=c(4,1))
+  # }
+
+  if(is.null(colbar)){
+    # Plot the matrix, positve entries, negative entries then zero entries (if any)
+    image(t(apply(M.pos, 2, rev)), axes=FALSE, xlab=NA, ylab=NA, col=col.pos, bty='n')
+    par(new=TRUE)
+    image(t(apply(M.neg, 2, rev)), axes=FALSE, xlab=NA, ylab=NA, col=col.neg, bty='n')
+    if(any(!is.na(M.zero))){
+      par(new=TRUE)
+      image(t(apply(M.zero, 2, rev)), axes=FALSE, xlab=NA, ylab=NA, col='white', bty='n')
+    }
+  } else if(colbar=="vert"){
+    ybar = seq(-max(abs(colrange)),max(abs(colrange)),length=length(cbar))
+    yLim = colrange
+    plot(rep(1,length(cbar)), ybar, col=cbar, pch=15,cex=3, axes=FALSE, xlab=NA, ylab=NA, ylim=yLim, xlim=c(.95,1.1))
+    axis(side = 4, at = pretty(yLim,5), cex.axis=1.125, line = -4, lwd = 0, las=1)
+  } else{
+    ybar = seq(-max(abs(colrange)),max(abs(colrange)),length=length(cbar))
+    yLim = colrange
+    plot(ybar, rep(1,length(cbar)), col=cbar, pch=15,cex=3, axes=FALSE, xlab=NA, ylab=NA, xlim=yLim, ylim=c(.95,1.1))
+    axis(side = 1, at = pretty(yLim,5), cex.axis=1.125, line = -4, lwd = 0, las=1)
+  }
+
+  # if(!keep.layout){
+  #   # Plot the (assymetrical) colorbar
+  #   ybar = seq(-max(abs(colrange)),max(abs(colrange)),length=length(cbar))
+  #   yLim = colrange
+  #   plot(rep(1,length(cbar)), ybar, col=cbar, pch=15,cex=3, axes=FALSE, xlab=NA, ylab=NA, ylim=yLim, xlim=c(.95,1.1))
+  #   axis(side = 4, at = pretty(yLim,5), cex.axis=1.125, line = -4, lwd = 0, las=1)
+  # }
+
+
+  # # Reset layout
+  # if(!keep.layout){
+  #   par(new=FALSE, mar=c(2,2,.5,0), oma=c(0,0,0,0), bg='white', bty='n')
+  #   layout(1)
+  # }
+  # if(!keep.layout){
+  #   # Plot the (assymetrical) colorbar
+  #   ybar = seq(-max(abs(colrange)),max(abs(colrange)),length=length(cbar))
+  #   yLim = colrange
+  #   plot(rep(1,length(cbar)), ybar, col=cbar, pch=15,cex=3, axes=FALSE, xlab=NA, ylab=NA, ylim=yLim, xlim=c(.95,1.1))
+  #   axis(side = 4, at = pretty(yLim,5), cex.axis=1.125, line = -4, lwd = 0, las=1)
+  # }
+
+}

@@ -1,0 +1,34 @@
+
+par(bty='n')
+boxplot(x=t(boot_test$boot), col=add.alpha('dodgerblue',.75), border=add.alpha('black',.35), pch=16, cex=0.5, xaxt='n', outline=FALSE, range=0.95, lwd=2)
+lines(1:p,boot_test$test, lwd=2, col=add.alpha('red',.75), type='b', pch=16, cex=0.75)
+abline(v=Brank+1, lwd=2, lty=3, col=add.alpha('black',.75))
+axis(1, at=pretty(c(0,p))+1,labels = pretty(c(0,p)))
+
+
+r = rankTest(boot_test)$r
+VECM_est = johansen(X,r)
+
+# Unrestricted estimator
+P.hat = VECM_est$alpha%*%t(VECM_est$beta)
+# Project estimated P.hat onto a symmetric subspace
+P.prj = low_rank(sym_project(P.hat),r)
+# Symmetric estimator of Pi
+P.sym=  P.sym.hat(X)
+
+test_matrix(P.hat,B)
+test_matrix(P.prj,B)
+test_matrix(P.sym,B)
+# logL(X,P.hat)-logL(X,M)
+
+
+plot_adj_matrix(B)
+plot_adj_matrix(P.hat)
+plot_adj_matrix(P.prj)
+plot_adj_matrix(P.sym)
+
+# plot_adj_matrix(P.hat[unscramble,])
+# plot_adj_matrix(P.prj[unscramble,])
+# plot_adj_matrix(P.sym[unscramble,])
+
+

@@ -1,0 +1,280 @@
+library(quantreg)
+library(misc)
+clean_up()
+savePDF = TRUE
+# savePDF = FALSE
+method_type = "Historical"
+method_type = "Manipulated"
+
+plotlib = "~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/WoT/plots/"
+plotlib = "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/TeX/WoT quantile regression/plots/"
+
+get_coef <- function(x, a=.05){
+  est = x$coefficients[,1]
+  hi  = x$coefficients[,1]+qnorm(1-a/2)*x$coefficients[,2]
+  lo  = x$coefficients[,1]-qnorm(1-a/2)*x$coefficients[,2]
+  out = data.frame(tau=x$tau, est = est, lo=lo, hi=hi)
+  return(out)
+}
+
+
+dots <- read.csv("~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/packages/WoT/data/dots.csv")
+dots$logerr = log(dots$guess/dots$d)
+head(dots)
+
+dots$logd2 = log(dots$d)-log(55) # adjust the x-axis so the d=55 group intercept corresponds to the group quantile
+
+
+taus       = seq(0,1,.1)
+ntau       = length(taus)
+taus[1]    = .01
+taus[ntau] = .99
+
+taus       = seq(.1,.9,.1)
+taus       = c(.05,taus,.95)
+ntau       = length(taus)
+
+
+
+if(method_type == "Historical"){
+  # History group
+    fit.lm = lm(logerr ~ logd2*as.factor(v), data=dots, subset=(method=="history"))
+    fit.qr = rq(logerr ~ logd2*as.factor(v), data=dots, subset=(method=="history"), tau=taus)
+} else{
+  # Manipulated group
+    fit.lm = lm(logerr ~ logd2*as.factor(v), data=dots, subset=(method!="history" | v==0))
+    fit.qr = rq(logerr ~ logd2*as.factor(v), data=dots, subset=(method!="history" | v==0), tau=taus)
+}
+  
+# Make summary with coefs and SEs
+  sum.lm = summary(fit.lm)
+  # sum.qr = summary(fit.qr, se='boot')
+  sum.qr = summary(fit.qr, covariance=TRUE)
+  
+# Set number of parameters, quantiles
+  npar = nrow(coef(fit.qr))
+  # ntau = ncol(coef(fit.qr))
+  qres = array(dim=c(4,ntau,npar), dimnames = list(c("tau", "est", "lo", "hi")))
+  for(i in 1:length(sum.qr)){
+    tmp = get_coef( sum.qr[[i]] )
+    qres[,i,] = t(tmp)
+  }
+
+  tmp     = sum.lm$coefficients[,1:2]
+  lm.coef = data.frame(est = tmp[,1], lo = tmp[,1]-1.96*tmp[,2], hi = tmp[,1]+1.96*tmp[,2])
+
+  
+  fn = paste0(plotlib,tolower(method_type),"_qr.pdf")
+
+# Plot results
+  if(savePDF) pdf(file=fn, width=10, height=6) 
+    par(mfrow=c(2,4), mar=c(2,2,1,1), oma=c(2,1.5,6,1))
+    layout(matrix(c(1,2,3,6,4,7,5,8), nr=2))
+    for(i in 1:npar){
+      x  = qres[1,,i]
+      y  = qres[2,,i]
+      lo = qres[3,,i]
+      hi = qres[4,,i]
+      
+      # plot(0,0, type='n', xlim=c(0,1), ylim=c(range(qres[-1,i,])))
+      yLim = ifelse(i %in% c(2,6,7,8), 1, 1)*c(-1,1)
+      plot(0,0, type='n', xlim=c(0,1), ylim=yLim, ann=FALSE)
+      polygon(c(x,rev(x)), c(lo, rev(hi)), border=NA, col=add.alpha('black',.25))
+      abline(h=0, v=0.5, lty=3, col=add.alpha('black',.75))
+      lines(x,y)
+      
+      # x1 = c(0,1,1,0)
+      # y1 = c(rep(lm.coef[i,2],2),rep(lm.coef[i,3],2))
+      # polygon(x1, y1, col=add.alpha('red',.15), border=NA)
+      # abline(h=lm.coef[i,1], col=add.alpha('red',.75))
+      
+      # mtext(rownames(coef(fit.qr))[i]  , 3, line=0)
+      
+      if(i==1){
+        mtext(text = "Intercept", side=2, line=2)
+        mtext(text = "v=0", side=3, line=1)
+        # legend("topleft", c("Quantile","Linear"), col=add.alpha(c("black","red"),.75), lty=1, lwd=2, bty='n')
+      } else if(i==2){
+        mtext(text = "Slope", side=2, line=2)
+      } else if(i==3){
+        mtext(text = "v=1", side=3, line=1)
+      } else if(i==4){
+        mtext(text = "v=3", side=3, line=1)
+      } else if(i==5){
+        mtext(text = "v=9", side=3, line=1)
+      }
+    }
+    mtext("Reference group", side=3, line = 1.7, outer=TRUE, adj = .1)
+    mtext("Contrast groups", side=3, line = 1.7, outer=TRUE, adj = .64)
+    mtext("Quantiles", side=1, line = 1, outer=TRUE)
+    mtext(method_type, side=3, line = 4, outer=TRUE, cex=1.5)
+  if(savePDF) dev.off()  
+
+
+tmp = aggregate(logerr~d+v+method, data=dots, subset=(method=='history'), median)[1:4,]
+
+summary(lm(logerr~I(log(d)-log(55)), data=tmp))
+    
+# par(mfrow=c(6,7), mar=c(0,0,0,0), oma=c(0,0,0,0))
+# S = unique(dots$session)
+# for(s in S){
+#   tmp = subset(dots, session==s)
+#   acf(tmp$logerr)
+# }
+
+
+# Plot regression lines for quantiles comparing within v-groups:
+    taus = seq(0.1,.9,.2)
+    ntau = length(taus)
+    if(method_type == "Historical"){
+      # History group
+      fit.lm = lm(logerr ~ logd2*as.factor(v), data=dots, subset=(method=="history"))
+      fit.qr = rq(logerr ~ logd2*as.factor(v), data=dots, subset=(method=="history"), tau=taus)
+    } else{
+      # Manipulated group
+      fit.lm = lm(logerr ~ logd2*as.factor(v), data=dots, subset=(method!="history" | v==0))
+      fit.qr = rq(logerr ~ logd2*as.factor(v), data=dots, subset=(method!="history" | v==0), tau=taus)
+    }
+    
+    
+    coef(fit.qr)
+    v0 = coef(fit.qr)[1:2,]
+    v1 = coef(fit.qr)[1:2,]+coef(fit.qr)[c(3,6),]
+    v3 = coef(fit.qr)[1:2,]+coef(fit.qr)[c(4,7),]
+    v9 = coef(fit.qr)[1:2,]+coef(fit.qr)[c(5,8),]
+    
+    plot_qrlines <- function(v,x, yLim = c(0,4), logscale=FALSE){
+      taus = as.numeric(substr(colnames(v0),6, nchar(colnames(v0))))
+      ntau = ncol(v0)
+      plot(0,0, xlim=range(exp(x+log(55))), ylim=yLim, type='n', bty='n')
+      for(i in 1:ntau){
+        if(taus[i]==.5){
+          cols = add.alpha('tomato2',.95)
+          Lty  = 1
+          Lwd  = 1.5
+        } else{
+          cols = add.alpha('tomato2',.95)
+          Lty  = 2
+          Lwd  = 1.5
+        }
+        if(logscale){
+          abline(h=0, lty=3, col=add.alpha('black',.5))
+          lines(exp(x+log(55)), exp(v[1,i]+v[2,i]*x), col=cols, lty=Lty, lwd=Lwd)
+          text(max(exp(x+log(55))),exp(v[1,i]+v[2,i]*max(x)), labels = taus[i], pos = 4, cex=.75, offset = .1)  
+          
+        } else{
+          abline(h=1, lty=3, col=add.alpha('black',.5))
+          lines(exp(x+log(55)), exp(v[1,i]+v[2,i]*x), col=cols, lty=Lty, lwd=Lwd)
+          text(max(exp(x+log(55))),exp(v[1,i]+v[2,i]*max(x)), labels = taus[i], pos = 4, cex=.75, offset = .1)  
+          
+        }
+      }
+    }
+    
+    
+fn = paste0(plotlib,tolower(method_type),"_qrlines.pdf")
+
+# Plot results
+if(savePDF) pdf(file=fn, width=10, height=6)     
+    par(mfrow=c(2,2), mar=c(3,3,1,1), oma=c(1.5,1.5,3.5,0))
+    x = seq(0,3.1,.1)
+    plot_qrlines(v0,x); mtext("v=0", side=3, line=0)
+      tmp = subset(dots, method=="history" & v==0)
+      points(tmp$d,exp(tmp$logerr), pch=16, col=add.alpha('black',.25), cex=.5)
+    plot_qrlines(v1,x); mtext("v=1", side=3, line=0)
+      tmp = subset(dots, method=="history" & v==1)
+      points(tmp$d,exp(tmp$logerr), pch=16, col=add.alpha('black',.25), cex=.5)
+    plot_qrlines(v3,x); mtext("v=3", side=3, line=0)
+      tmp = subset(dots, method=="history" & v==3)
+      points(tmp$d,exp(tmp$logerr), pch=16, col=add.alpha('black',.25), cex=.5)
+    plot_qrlines(v9,x); mtext("v=9", side=3, line=0)
+      tmp = subset(dots, method=="history" & v==9)
+      points(tmp$d,exp(tmp$logerr), pch=16, col=add.alpha('black',.25), cex=.5)
+    mtext("Number of dots visible", side=1, outer=TRUE, line=0)
+    mtext("Relative error", side=2, outer=TRUE, line=0)
+    mtext(method_type, side=3, line = 2, outer=TRUE, cex=1.5)
+if(savePDF) dev.off()  
+    
+      
+  
+# Plot regression lines for quantiles comparing within quantile-groups
+  # vectors selecting parameters:
+  #   a0 = as.logical(c(1,0,0,0,0,0,0,0))
+  #   a1 = as.logical(c(1,0,1,0,0,0,0,0))
+  #   a3 = as.logical(c(1,0,0,1,0,0,0,0))
+  #   a9 = as.logical(c(1,0,0,0,1,0,0,0))
+  #   b0 = as.logical(c(0,1,0,0,0,0,0,0))
+  #   b1 = as.logical(c(0,1,0,0,0,1,0,0))
+  #   b3 = as.logical(c(0,1,0,0,0,0,1,0))
+  #   b9 = as.logical(c(0,1,0,0,0,0,0,1))
+  #   A = t(as.matrix(data.frame(a0=a0, a1=a1, a3=a3, a9=a9, b0=b0,b1=b1,b3=b3,b9=b9)))
+  #     
+  #   
+  # get_qrline = function(x,a,b, est, C){
+  #   nx = length(x)
+  #   A  = outer(rep(1,nx),a,"*")+outer(x,b,"*")
+  #   se = sqrt(diag(A%*%C%*%t(A)))
+  #   y  = A%*%est
+  #   hi = y+1.96*se
+  #   lo = y-1.96*se  
+  #   out = data.frame(y=y, lo=lo, hi=hi)
+  #   return(out)
+  # } 
+  #     
+  # taus = c(.1,.25,.5,.75,.9)
+  # ntau = length(taus)
+  # M = aggregate(logerr~d+v+method, data=dots, function(x) quantile(x, taus))
+  # fit.qr = rq(logerr ~ logd2*as.factor(v), data=dots, subset=(method=="history"), tau=taus)
+  # summary(fit.qr)
+  # sum.qr = summary(fit.qr, covariance=TRUE)
+  # 
+  # plot_qrtau <- function(fit){
+  #   
+  #   # fit = 2
+  #   tmp = sum.qr[[fit]]
+  #   C   = tmp$cov
+  #   est = tmp$coefficients[,1]
+  #   x   = seq(0,3,.01)
+  #   
+  #   qrl0 = get_qrline(x,a0,b0, est, C)
+  #   qrl1 = get_qrline(x,a1,b1, est, C)
+  #   qrl3 = get_qrline(x,a3,b3, est, C)
+  #   qrl9 = get_qrline(x,a9,b9, est, C)
+  #   
+  #   xx = c(x,rev(x))
+  #   y0 = c(qrl0$lo, rev(qrl0$hi))
+  #   y1 = c(qrl1$lo, rev(qrl1$hi))
+  #   y3 = c(qrl3$lo, rev(qrl3$hi))
+  #   y9 = c(qrl9$lo, rev(qrl9$hi))
+  #   col0 = 'tomato2'
+  #   col1 = 'steelblue'
+  #   col3 = 'limegreen'
+  #   col9 = 'magenta'
+  #   plot(0,0, xlim=c(0,1200), ylim=c(0,2), type='n')
+  #   polygon(55*exp(xx), exp(y0), border=NA, col=add.alpha(col0,.3))
+  #   polygon(55*exp(xx), exp(y1), border=NA, col=add.alpha(col1,.3))
+  #   polygon(55*exp(xx), exp(y3), border=NA, col=add.alpha(col3,.3))
+  #   polygon(55*exp(xx), exp(y9), border=NA, col=add.alpha(col9,.3))
+  #   abline(h=1, lty=3, col=add.alpha('black',.75))
+  #   
+  #   tmp = subset(M, method=="history" & v==0)
+  #   points(tmp$d, exp(tmp$logerr[,fit]), pch=16, col=add.alpha(col0,.75))
+  #   tmp = subset(M, method=="history" & v==1)
+  #   points(tmp$d, exp(tmp$logerr[,fit]), pch=16, col=add.alpha(col1,.75))
+  #   tmp = subset(M, method=="history" & v==3)
+  #   points(tmp$d, exp(tmp$logerr[,fit]), pch=16, col=add.alpha(col3,.75))
+  #   tmp = subset(M, method=="history" & v==9)
+  #   points(tmp$d, exp(tmp$logerr[,fit]), pch=16, col=add.alpha(col9,.75))
+  #   
+  #   # tmp = subset(dots, method=="history")
+  #   # points(tmp$d, exp(tmp$logerr), pch=16, col=add.alpha('black',.15))
+  #   
+  # }
+  # taus
+  # ntau
+  # par(mfrow=c(2,3))
+  # for(i in 1:ntau){
+  #   plot_qrtau(i)
+  # }
+  # 
+  

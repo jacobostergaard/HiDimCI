@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(HiDimCI)\nlibrary(misc)\nlibrary(Matrix)\n\nclean_up(filelib)\n\nset.seed(1234)\n\nN       = 2000 # 500,1000,2000 or 5000\np       = 100\nd       = 8\nsig     = 1\nmc_iter = 300\np-floor(p/d)*d # This gives: p-floor(p/d)*d independent processes\n\ndt= 1\nB = as.matrix(HiDimCI::Kuramoto.matrix(p,d))\nBrank = rankMatrix(B)[1]\ne = dt*matrix(rnorm(N*p),nr=p,nc=N)\n\nX   = HiDimCI::sampleVAR1(N,rep(0,p),B+diag(p),rep(0,p),sig*diag(p),e,dt)\n\n\nb100 = Kuramoto.beta(p,rep(d,floor(p/d)),rep(d,floor(p/d)))\nb100 = diag(p)\n# johansen(X,r = Brank,H = b100)\nM = johansen(X,r = Brank)\n\nplot(79:89,M$test[80:90], type='l', bty='n')\n\ndX = diff(t(X))\nX1 = t(X[,-N])\nR0 = t(dX-apply(dX,2,sum)/N)\nR1 = t(X1-apply(X1,2,sum)/N)\n\nS00 = Sij(R0,R0)\nS01 = Sij(R0,R1)\nS10 = Sij(R1,R0)\nS11 = Sij(R1,R1)\nS00_1 = solve(S00)\n\nS10S00S01   = S10%*%S00_1%*%S01\nS11.b       = t(b100)%*%S11%*%b100\nS10S00S01.b = t(b100)%*%S10S00S01%*%b100\ne1    = eigen(S11.b)$values\nW     = eigen(S11.b)$vectors\nS11.5 = W%*%diag(1/sqrt(e1))%*%t(W)\neigen(S11.5%*%S10S00S01.b%*%S11.5)\nl     = sort(eigen(S11.5%*%S10S00S01.b%*%S11.5)$values,decreasing=TRUE)\nU     = eigen(S11.5%*%S10S00S01.b%*%S11.5)$vectors\nV     = S11.5%*%U\n\n",
+    "created" : 1507196175983.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2297835020",
+    "id" : "3DA47FED",
+    "lastKnownWriteTime" : 1550758057,
+    "last_content_update" : 1550758057184,
+    "path" : "~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/misc/test package.R",
+    "project_path" : "misc/test package.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,4 @@
+exportPattern("^[[:alpha:]]+")
+useDynLib(HiDimCI)
+import(RcppArmadillo)
+importFrom(Rcpp, evalCpp)

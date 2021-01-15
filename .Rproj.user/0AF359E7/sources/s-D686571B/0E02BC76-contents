@@ -1,0 +1,108 @@
+cls_tmp = rep(1:length(tmp$p),tmp$p)
+M_tmp = P.sym[tmp$ord, tmp$ord]
+nd = length(tmp$p)
+O  = numeric(nd)
+for(i in 1:nd){
+  i_tmp  = which(cls_tmp==i)
+  M_tmp2 = M_tmp[i_tmp, i_tmp]
+  O[i] = (sum(M_tmp2)-sum(diag(M_tmp2)))/(length(i_tmp)^2-length(i_tmp))
+  
+}
+O[is.infinite(O)] = 0
+
+Popt <- function(O){
+  tmp = make_adj_matrix(Z)
+  O[which(tmp$p==1)] = 0
+  M = tmp$A[tmp$ord, tmp$ord]%*%diag(rep(O,tmp$p))
+  out = M[tmp$inv_ord,tmp$inv_ord]
+  return(out)
+}
+
+matrix_angle
+f <- function(O){
+  out = frobenius(Popt(O)-P.sym)
+  # out = matrix_angle(Popt(O),P.hat)
+  return(out)
+}
+
+system.time({
+  res = nlm(f, O)
+})
+
+b.test$B[1:10,1:10]
+P.opt = Popt(res$estimate)
+
+plot(res$estimate)
+abline(h=0.02040816)
+points(O)
+
+res$estimate
+
+logL(X,P.hat)
+logL(X[tmp$ord,],P.sym[tmp$ord, tmp$ord])
+logL(X,P.opt)
+
+image(P.opt[tmp$ord, tmp$ord])
+plot(diag(b.test$B),diag(P.opt)[tmp$ord])
+A%*%t(A)
+
+solve(t(A)%*%A)
+
+
+E = eigen(A)
+V = E$vectors[,which(abs(E$values)>1e-10)]
+P = V%*%solve(t(V)%*%V)%*%t(V)
+
+# P = eigen(P)$vectors
+# image(P[tmp$ord, tmp$ord])
+
+
+r = 82
+
+rank_approx <- function(M,r){
+  tmp = svd(M)
+  Ur  = tmp$u[,1:r]
+  Dr  = diag(tmp$d[1:r])
+  Vr  = tmp$v[,1:r]
+  out = Ur%*%Dr%*%t(Vr)
+  return(out)
+}
+
+image(M.tmp[tmp$ord, tmp$ord])
+image(P%*%M.tmp)
+P = P[tmp$ord, tmp$ord]
+M.pre = P.hat[tmp$ord,tmp$ord]
+image(M.pre)
+image(P)
+M.tmp = rank_approx(M.pre, r)
+image(M.tmp)
+image(P%*%M.tmp)
+image(M.tmp%*%P)
+image(P[tmp$ord, tmp$ord])
+image((P%*%M.tmp)[tmp$ord,tmp$ord])
+
+M.nxt = M.pre
+
+
+
+
+
+
+# Phat = function(X,r){
+#   N   = ncol(X)
+#   dX  = diff(t(X))
+#   X1  = t(X[,-N])
+#   R0  = t(dX)
+#   R1  = t(X1)
+#   S00 = S(R0,R0)
+#   S01 = S(R0,R1)
+#   S10 = S(R1,R0)
+#   S11 = S(R1,R1)
+#   M.tmp = S01%*%solve(S11)
+#   tmp.sym = sym_project(M.tmp)
+#   tmp.sym = low_rank(tmp.sym,r)
+#   return(tmp.sym)
+# }
+# 
+# S_eigen(X)
+# M.init = 

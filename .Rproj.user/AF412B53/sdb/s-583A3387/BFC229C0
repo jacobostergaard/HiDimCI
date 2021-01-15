@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "// Bootstrapping for critical values for Johansens rank test for a VECM\n// Model is dX = (Pi*X[t-1]+Phi*D[t])dt + Sigma*dW[t], 3-dimensional...\n\n// [[Rcpp::depends(RcppArmadillo)]]\n#include <RcppArmadillo.h>\n#include <stdio.h>\n#include <math.h>\n#include \"tools.h\"\n#include \"misc.h\"\n#include \"johansen.h\"\n\nusing namespace Rcpp;\nusing namespace arma;\nusing namespace std;\n\n// Declare functions\narma::mat sampleVAR1(int N, arma::vec X0, arma::mat A, arma::vec mu, arma::mat D, arma::mat e, double dt);\n\n\n// Bootstrapping loop, using the Johansen procedure for estimation of statistic-distribution\narma::mat bootLoop(arma::mat X, int r, int B, double dt, bool verbose){\n  /* Inputs are\n  *    X     Time series observations: dimensions should be p-by-N => each row is a marginal time-series\n  *    r     The rank to use for estimation of parameters\n  *    B     Number of bootstrap samples\n  *    dt    Time resolution.\n  */\n\n  bool estPsi = FALSE;\n\n  // Overall properties of the system\n  int N = X.n_cols-1;   // Number of observations\n  int p = X.n_rows;     // Dimension of the system\n\n  double pct = (double) r/p;\n\n  mat Minit, res, alpha, beta, Pi, Psi, S2, Xboot, A, e, Mboot;\n  mat out = zeros<mat>(1,B);\n  mat Ip = eye<mat>(p,p);\n  vec X0 = zeros<vec>(p);\n\n  // Get residuals from model estimation\n  if(r == 0){\n    Minit   = var(X, estPsi, dt);\n    Pi      = zeros<mat>(p,p);\n  } else{\n\n    Minit   = vecm(X,r,Ip,Ip, estPsi, dt);\n    alpha   = Minit.cols( 0         , r-1       );\n    beta    = Minit.cols( r         , 2*r-1     );\n    Pi      = alpha*beta.t();\n  }\n  res     = Minit.cols( 2*r+p+2+1 , 2*r+p+2+N );\n  Psi     = Minit.cols( 2*r       , 2*r       );\n  S2      = Minit.cols( 2*r+1     , 2*r+p   );\n\n\n  // Center residuals\n  res = (res-repmat(mean(res,1),1,res.n_cols));\n  // Run bootstrap samples, each sample is called Xboot, each model is Mboot\n  for(int b=0;b<B;b++){\n    e = res%randn(p,N);   // Wild bootstrap innovations\n    A = Pi+Ip;            // VAR matrix\n\n    Xboot = sampleVAR1(N, X0, A, Psi, S2, e, dt);     // Sample a VAR(1) with parameter estimates\n    Mboot = vecm(Xboot,1,Ip,Ip, estPsi, dt);                // Find test statistics\n    // Mboot = johansenCpp(Xboot,r,Ip,Ip, estPsi, dt);                // Find test statistics\n\n    out(0,b) =  Mboot(r,2*1+p+1);\n    if(verbose){\n      display_progress(pct + (double) (b+1)/(B*p) );\n    }\n  }\n\n  return out;\n}\n\n\n\n// The the function returns ...\n// [[Rcpp::export]]\narma::mat bootstrapCpp(arma::mat X, int B, double dt, bool verbose){\n\n  // Include support for restricted alpha/beta matrices!\n  int p = X.n_rows;\n  mat est,boot,out;\n\n  if(B > 0){\n    // Run bootstrap method to determine test-statistic distributions!\n    out = zeros<mat>(p,B);\n    for(int r=0;r<p;r++){\n      boot = bootLoop(X,r,B,dt, verbose);\n      out.row(r) = boot;\n          // display_progress((double) (r+1)/p);\n    }\n  } else{\n    out = zeros<mat>(p,1);\n  }\n  return out;\n}\n",
+    "created" : 1551097552669.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4285938608",
+    "id" : "BFC229C0",
+    "lastKnownWriteTime" : 1551189897,
+    "last_content_update" : 1551189897185,
+    "path" : "~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/bootstrap.cpp",
+    "project_path" : "src/bootstrap.cpp",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "cpp"
+}

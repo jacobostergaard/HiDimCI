@@ -1,0 +1,32 @@
+A = matrix(c(-2,1,1,1,-2,1,1,1,-2), nr=3, nc=3)
+
+# B = chol(A)
+# rankMatrix(B)
+# t(B)%*%B
+rankMatrix(A)
+U = svd(A)$u
+D = svd(A)$d
+V = svd(A)$v
+U%*%diag(D)%*%t(V)
+V
+U
+V%*%diag(D)
+U
+U%*%diag(D)
+
+# apply(svd(A)$u,2, function(x) sum(x^2))
+# apply(svd(A)$u,1, function(x) sum(x^2))
+      
+p = 8
+r = p-1
+
+a = matrix(1, nr=p, nc=r)
+diag(a) = -r
+b = 0*a
+diag(b) = 1
+b[p,] = -1
+b
+
+a%*%t(b)
+
+

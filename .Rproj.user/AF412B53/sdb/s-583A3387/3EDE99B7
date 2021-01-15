@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#include <RcppArmadillo.h>\n#include <stdio.h>\n#include <math.h>\n\nusing namespace std;\nusing namespace arma;\n\n// Function returns the p phases (phi) in [0,2pi) for a 2p-dim input vector z of (x,y) coordinates.\narma::mat phase(arma::vec z) {\n  int p = z.size()/2; // Number of bi-variate oscillators\n  arma::vec out(p, fill::zeros);\n  for(int i=0; i<p; i++){\n    out(i) = atan2(z(2*i+1), z(2*i));        // 2-input atan function, return angles in [-pi,pi)\nout(i) = fmod(2*M_PI+out(i), 2*M_PI); // Shift output to [0,2pi)\n  }\n  return out;\n}\n\n\n// Function returns the p amplitudes (gamma)for a 2p-dim input vector z of (x,y) coordinates.\narma::mat amplitude(arma::vec z) {\n  int p = z.size()/2; // Number of bi-variate oscillators\n  arma::vec out(p, fill::zeros);\n  for(int i=0; i<p; i++){\n    out(i) = sqrt(pow(z(2*i), 2)+pow(z(2*i+1), 2));\n  }\n  return out;\n}\n\n\n// Return Cartesian (x,y) coordinates, from vectors of p-dim polar coordinate input: amplitude and phase.\narma::mat polarToXY(arma::vec gam, arma::vec phi){\n  int p = phi.size();\n  arma::vec out(2*p, fill::zeros);\n  for(int i=0; i<p; i++){\n    out(2*i) = gam(i)*cos(phi(i));\n    out(2*i+1) = gam(i)*sin(phi(i));\n  }\n  return out;\n}\n\n// Return the sign of input\nint sgn(int val) {\n  return (val > 0) - (val < 0);\n}\n",
+    "created" : 1551192107017.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1389572377",
+    "id" : "3EDE99B7",
+    "lastKnownWriteTime" : 1467900064,
+    "last_content_update" : 1467900064,
+    "path" : "~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.cpp",
+    "project_path" : "src/tools.cpp",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "cpp"
+}

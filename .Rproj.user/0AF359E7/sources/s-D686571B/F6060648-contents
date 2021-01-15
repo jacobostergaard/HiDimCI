@@ -1,0 +1,252 @@
+# Various tools for High-Dimensional cointegration simulation
+
+# Find the moment matrices for Johansens eigenvalue problem.
+Sij <- function(Ri,Rj){
+  N = ncol(Ri)
+  Stmp = 0
+  for(t in 1:N) Stmp = Stmp+Ri[,t]%*%t(Rj[,t])/N
+  Stmp
+}
+
+
+# Get the eigenvalues of the combination of the moment matrices S00, S11, S01, S10
+Seigen <- function(X){
+  dX = diff(t(X))
+  X1 = t(X[,-N])
+
+  R0 = t(dX-apply(dX,2,sum)/N)
+  R1 = t(X1-apply(X1,2,sum)/N)
+
+  S00 = Sij(R0,R0)
+  S01 = Sij(R0,R1)
+  S10 = Sij(R1,R0)
+  S11 = Sij(R1,R1)
+  e = sort(eigen(S01%*%solve(S11)%*%S10%*%solve(S00))$values,decreasing = FALSE)
+  return(list(e=e,S00=S00,S01=S01,S11=S11))
+}
+
+
+eigenTest <- function(vals){
+
+  n = length(vals)
+
+  if(vals[1] > vals[n])
+    vals = sort(vals,decreasing = FALSE)
+
+  test = cumsum(log(1-vals))
+
+  return(test)
+}
+
+
+
+
+
+# Tools for the package, tests and calcuations.
+
+# Find the p-values for the Johansen procedure using bootstrapped values
+rankTest <- function(M){
+  p = length(M$test)
+  pVals = numeric(0)
+  for(i in 1:p){
+    test.cdf = ecdf(M$boot[i,])
+    pVals[i] = 1-test.cdf(M$test[i])
+  }
+  names(pVals) = paste0("r=",(0:(p-1)))
+  if(any(pVals>0.05)){
+    r.est = min(which(pVals>0.05))-1
+  } else{
+    r.est = p
+  }
+  names(r.est) = ""
+  out = list(r=r.est,pVal = pVals)
+  return(out)
+}
+
+
+# Test restrictions (using LRT) on alpha and beta, input models (from:unrestricted/previous, to:restrictions)
+LRtest <- function(from,to){
+  T     = nrow(from$res)+1
+  r     = to$r
+  df    = to$df
+  lp    = from$lambda
+  lh    = to$lambda
+  test  = T*sum(log(1-lh[1:r])-log(1-lp[1:r]))
+  pVal  = pchisq(test,df,lower.tail = FALSE)
+  out   = round(data.frame(test,df,pVal),3)
+  names(out) = c("Statistic","df","p-value")
+  return(out)
+}
+
+
+# Caculate the standard errors for alpha and mu
+getSE <- function(fit){
+  N   = fit$N
+  dt  = fit$dt
+  Om  = fit$Omega
+  phi = fit$data
+  r   = fit$r
+  p   = nrow(Om)
+
+  # Calculate...
+  if(r==0){
+    SE = sqrt(diag(Om)*dt)
+    alpha = NULL
+  } else {
+    alpha = fit$alpha
+    beta = fit$beta
+    #Z = t(beta)%*%t(phi)
+    Z = crossprod(beta,t(phi))
+    Z = rbind(Z,1)
+    #ZZ = solve(Z%*%t(Z))
+    ZZ = solve(tcrossprod(Z,Z))
+    SE = sqrt(diag(kronecker(Om,ZZ))/dt)
+  }
+
+  # Set output with headers
+  outMat = matrix(SE,nr=3,byrow=TRUE)
+  outVec = c(outMat)
+  rownames(outMat) = c("phi_1","phi_2","phi_3")
+  if(r > 0){
+    colnames(outMat)=c(paste0("alpha_",1:r),"mu")
+    names(outVec) = c(paste0("alpha_",as.character(outer(10*(1:p),(1:r),FUN = "+"))),paste0("mu_",1:p))
+  } else {
+    colnames(outMat)=paste0("mu")
+    names(outVec)=paste0("mu_",1:p)
+  }
+  out = rbind(c(alpha,fit$Psi),outVec)
+  tVal = abs(out[1,]/out[2,])
+  pVal = 2*pnorm(tVal,lower.tail = FALSE)
+  out = rbind(out,pVal)
+
+  colnames(out) = names(outVec)
+  rownames(out) = c("Estimate","Std.Err","p-value")
+
+
+  # Tvals = abs(estPar)/stdErr
+  # pVals = 2*pnorm(Tvals,lower.tail = FALSE)
+  return(t(out))
+}
+
+
+
+
+Kuramoto.alpha <- function(p,pvec,avec){
+  rvec=pvec-1
+  n = length(pvec)
+  aout = matrix(0,nr=p,nc=sum(rvec))
+  for(i in 1:n){
+    ai =  matrix(avec[i],nr=pvec[i],nc=rvec[i])
+    diag(ai) = -rvec[i]*avec[i]
+    if(i == 1 ){
+      aout[1:pvec[i],1:rvec[i]] = ai
+    } else{
+      aout[(sum(pvec[1:(i-1)])+1):sum(pvec[1:(i)]),(sum(rvec[1:(i-1)])+1):sum(rvec[1:(i)])] = ai
+    }
+  }
+  return(aout)
+}
+
+
+Kuramoto.beta <- function(p,pvec,bvec){
+  rvec=pvec-1
+  n = length(pvec)
+  if(length(bvec)==1) bvec = rep(bvec,n)
+  bout = matrix(0,nr=p,nc=sum(rvec))
+  for(i in 1:n){
+    bi =  rbind(bvec[i]*diag(rvec[i]),rep(-bvec[i],rvec[i]))
+    if(i == 1 ){
+      bout[1:pvec[i],1:rvec[i]] = bi
+    } else{
+      bout[(sum(pvec[1:(i-1)])+1):sum(pvec[1:(i)]),(sum(rvec[1:(i-1)])+1):sum(rvec[1:(i)])] = bi
+    }
+  }
+  return(bout)
+}
+
+
+
+
+inner.product <- function(A,B){
+  if(is.vector(A)){
+    sum(A*B)
+  }else{
+    sum(diag(t(A)%*%B))
+  }
+  # sum(diag(Conj(t(A))%*%A))
+}
+matrix_angle <- function(A,B) {
+  if(A==0 || B==0){
+    0
+  } else if(all(A==B)){
+    0
+  } else {
+    tmp = inner.product(A,B)/sqrt(inner.product(A,A)*inner.product(B,B))
+    tmp#sqrt(Re(tmp)^2+Im(tmp)^2)
+  }
+}
+
+
+frobenius <- function(M){
+  sqrt(sum(M^2))
+}
+Om.hat <-function(X,P){
+  N   = ncol(X)
+  R0  = t(diff(t(X)))
+  R1  = X[,-N]
+  S00 = S(R0,R0)
+  S11 = S(R1,R1)
+  S01 = S(R0,R1)
+  S10 = S(R1,R0)
+  out = S00-P%*%S10-S01%*%P+P%*%S11%*%t(P)
+  return(out)
+}
+
+logL <- function(X,P){
+  N   = ncol(X)
+  Om  = Om.hat(X,P)
+  -.5*N*log(det(Om))
+}
+
+low_rank <- function(M,r){
+  # Low rank approximation of a matrix using the Eckart-Young-Mirsky theorem
+  svd(M)$u[,1:r]%*%diag(svd(M)$d[1:r])%*%t(svd(M)$v[,1:r])
+}
+
+sym_project <- function(M){
+  return(.5*(M+t(M)))
+}
+
+P.sym.hat <- function(X,r){
+  N   = ncol(X)
+  dX  = diff(t(X))
+  X1  = t(X[,-N])
+  R0  = t(dX)
+  R1  = t(X1)
+  S00 = S(R0,R0)
+  S01 = S(R0,R1)
+  S10 = S(R1,R0)
+  S11 = S(R1,R1)
+  M.tmp = S01%*%solve(S11)
+  tmp.sym = sym_project(M.tmp)
+  tmp.sym = low_rank(tmp.sym,r)
+  return(tmp.sym)
+}
+
+
+test_matrix <- function(M,B, dec=4){
+  cat("\nSymmetry of P.hat:                                     ", round(frobenius(M-t(M)), dec))
+  cat("\nAngle between B and P.hat:                             ", round(acos(matrix_angle(B,M)), dec))
+  cat("\nFrobenius norm of |B-P.hat|:                           ", round(frobenius(B-M), dec))
+  cat("\nStandard deviation of P.hat (outside block structure): ", round(sd(M[B==0]), dec))
+}
+
+
+
+ci.bounds <-function(x) quantile(x, probs=c(.025,.975))
+
+make_ci <- function(M){
+  out = as.data.frame(t(apply(M,1,ci.bounds)))
+  names(out) <- c('lo', 'hi')
+  return(out)
+}

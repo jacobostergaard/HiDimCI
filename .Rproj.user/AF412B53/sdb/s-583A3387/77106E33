@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "plot_adj_matrix <- function(M, colrange=c(-.25,.1), keep.layout=FALSE){\n  # This function can plot adjencency matrices with an assymetrical colorscale\n\n  # Find indices of pos/neg entries in the matrix and define pos,neg and zero matrices.\n  idx.pos = which(M>0)\n  idx.neg = which(M<0)\n  M.neg = M; M.neg[idx.pos] = NA\n  M.pos = M; M.pos[idx.neg] = NA\n  M.zero = 0*M; M.zero[sort(c(idx.pos,idx.neg))]=NA\n\n  # Define colors for pos/neg entrie (zero entrie will be white)\n  col.pos = colorRampPalette(RColorBrewer::brewer.pal(n = 9,name = \"Blues\"))(10000)\n  col.neg = colorRampPalette(RColorBrewer::brewer.pal(n = 9,name = \"Reds\"))(10000)\n  cbar = c(rev(col.neg),col.pos) # neg color scale must be reversed\n\n  # if colorrange is within allowed bounds, use cutoff values based on input M range:\n  # for positive entries...\n  if(max(M.pos[!is.na(M.pos)])/max(colrange)<1){\n    col.pos = col.pos[1:ceiling(10000*max(M.pos[!is.na(M.pos)])/max(colrange))]\n  }\n  # ... and for negative entries\n  if(min(M.neg[!is.na(M.neg)])/min(colrange)<1){\n    col.neg = col.neg[1:ceiling(10000*min(M.neg[!is.na(M.neg)])/min(colrange))]\n  }\n  # reverse the negative colorscale (so more negative colors are darker)\n  col.neg = rev(col.neg)\n\n  # Remove current plots (this is to avoid messing up in plots superimposed on plots...)\n  if(!is.null(dev.list())){\n    dev.off()\n  }\n\n  # Set plot environment\n  if(!keep.layout){\n    par(new=FALSE, mar=c(.5,.5,.5,0), oma=c(0,0,0,0), bg=add.alpha('black',.1), bty='n')\n    layout(matrix(1:2, nc=2), width=c(4,1))\n  }\n\n  # Plot the matrix, positve entries, negative entries then zero entries (if any)\n  image(t(apply(M.pos, 2, rev)), axes=FALSE, xlab=NA, ylab=NA, col=col.pos, bty='n')\n  par(new=TRUE)\n  image(t(apply(M.neg, 2, rev)), axes=FALSE, xlab=NA, ylab=NA, col=col.neg, bty='n')\n  if(any(!is.na(M.zero))){\n    par(new=TRUE)\n    image(t(apply(M.zero, 2, rev)), axes=FALSE, xlab=NA, ylab=NA, col='white', bty='n')\n  }\n\n  if(!keep.layout){\n    # Plot the (assymetrical) colorbar\n    ybar = seq(-max(abs(colrange)),max(abs(colrange)),length=length(cbar))\n    yLim = colrange\n    plot(rep(1,length(cbar)), ybar, col=cbar, pch=15,cex=3, axes=FALSE, xlab=NA, ylab=NA, ylim=yLim, xlim=c(.95,1.1))\n    axis(side = 4, at = pretty(yLim,5), cex.axis=1.125, line = -4, lwd = 0, las=1)\n  }\n\n\n  # Reset layout\n  if(!keep.layout){\n    par(new=FALSE, mar=c(2,2,.5,0), oma=c(0,0,0,0), bg='white', bty='n')\n    layout(1)\n  }\n\n}\n",
+    "created" : 1551254659108.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "33420659",
+    "id" : "77106E33",
+    "lastKnownWriteTime" : 1551707725,
+    "last_content_update" : 1551707793342,
+    "path" : "~/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/R/plot tools.R",
+    "project_path" : "R/plot tools.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

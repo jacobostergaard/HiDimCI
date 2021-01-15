@@ -1,0 +1,242 @@
+[
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/S_eigen.cpp",
+                "kind" : 6,
+                "line" : 15,
+                "name" : "S_eigen(arma::mat)",
+                "parent_name" : "",
+                "usr" : "c:@F@S_eigen#$@N@arma@C@Mat>#d#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/S_eigen.cpp",
+        "file_last_write" : 1505749270
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/bootstrap.cpp",
+                "kind" : 6,
+                "line" : 21,
+                "name" : "bootLoop(arma::mat, int, int, double, bool)",
+                "parent_name" : "",
+                "usr" : "c:@F@bootLoop#$@N@arma@C@Mat>#d#I#I#d#b#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/bootstrap.cpp",
+                "kind" : 6,
+                "line" : 82,
+                "name" : "bootstrapCpp(arma::mat, int, double, bool)",
+                "parent_name" : "",
+                "usr" : "c:@F@bootstrapCpp#$@N@arma@C@Mat>#d#I#d#b#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/bootstrap.cpp",
+        "file_last_write" : 1551189897
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/bootstrap_old.cpp",
+        "file_last_write" : 1507024453
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 8,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.cpp",
+                "kind" : 6,
+                "line" : 13,
+                "name" : "logLik(mat, mat, vec, mat, mat, mat, mat)",
+                "parent_name" : "",
+                "usr" : "c:@F@logLik#$@N@arma@C@Mat>#d#S0_#$@N@arma@C@Col>#d#S0_#S0_#S0_#S0_#"
+            },
+            {
+                "column" : 5,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.cpp",
+                "kind" : 6,
+                "line" : 25,
+                "name" : "M(mat, mat)",
+                "parent_name" : "",
+                "usr" : "c:@F@M#$@N@arma@C@Mat>#d#S0_#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.cpp",
+                "kind" : 6,
+                "line" : 39,
+                "name" : "S(arma::mat, arma::mat)",
+                "parent_name" : "",
+                "usr" : "c:@F@S#$@N@arma@C@Mat>#d#S0_#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.cpp",
+                "kind" : 6,
+                "line" : 52,
+                "name" : "M_perp(arma::mat)",
+                "parent_name" : "",
+                "usr" : "c:@F@M_perp#$@N@arma@C@Mat>#d#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.cpp",
+                "kind" : 6,
+                "line" : 69,
+                "name" : "M_bar(arma::mat)",
+                "parent_name" : "",
+                "usr" : "c:@F@M_bar#$@N@arma@C@Mat>#d#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.cpp",
+        "file_last_write" : 1510652892
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johaTools.h",
+        "file_last_write" : 1467902739
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johansen.cpp",
+                "kind" : 6,
+                "line" : 15,
+                "name" : "vecm(arma::mat, int, arma::mat, arma::mat, bool, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@vecm#$@N@arma@C@Mat>#d#I#S0_#S0_#b#d#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johansen.cpp",
+                "kind" : 6,
+                "line" : 221,
+                "name" : "var(arma::mat, bool, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@var#$@N@arma@C@Mat>#d#b#d#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johansen.cpp",
+                "kind" : 6,
+                "line" : 289,
+                "name" : "johansenCpp(arma::mat, int, arma::mat, arma::mat, bool, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@johansenCpp#$@N@arma@C@Mat>#d#I#S0_#S0_#b#d#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johansen.cpp",
+        "file_last_write" : 1551184509
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/johansen.h",
+        "file_last_write" : 1510654624
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/misc.cpp",
+                "kind" : 6,
+                "line" : 12,
+                "name" : "display_progress(double)",
+                "parent_name" : "",
+                "usr" : "c:@F@display_progress#d#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/misc.cpp",
+        "file_last_write" : 1505898380
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/misc.h",
+        "file_last_write" : 1505824718
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/sampleVAR1.cpp",
+                "kind" : 6,
+                "line" : 21,
+                "name" : "sampleVAR1(int, arma::vec, arma::mat, arma::vec, arma::mat, arma::mat, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@sampleVAR1#I#$@N@arma@C@Col>#d#$@N@arma@C@Mat>#d#S0_#S1_#S1_#d#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/sampleVAR1.cpp",
+        "file_last_write" : 1507021370
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/testCpp.cpp",
+                "kind" : 6,
+                "line" : 16,
+                "name" : "test_vecm(arma::mat, int, arma::mat, arma::mat, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@test_vecm#$@N@arma@C@Mat>#d#I#S0_#S0_#d#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/testCpp.cpp",
+        "file_last_write" : 1507209612
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.cpp",
+                "kind" : 6,
+                "line" : 9,
+                "name" : "phase(arma::vec)",
+                "parent_name" : "",
+                "usr" : "c:@F@phase#$@N@arma@C@Col>#d#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.cpp",
+                "kind" : 6,
+                "line" : 21,
+                "name" : "amplitude(arma::vec)",
+                "parent_name" : "",
+                "usr" : "c:@F@amplitude#$@N@arma@C@Col>#d#"
+            },
+            {
+                "column" : 11,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.cpp",
+                "kind" : 6,
+                "line" : 32,
+                "name" : "polarToXY(arma::vec, arma::vec)",
+                "parent_name" : "",
+                "usr" : "c:@F@polarToXY#$@N@arma@C@Col>#d#S0_#"
+            },
+            {
+                "column" : 5,
+                "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.cpp",
+                "kind" : 6,
+                "line" : 43,
+                "name" : "sgn(int)",
+                "parent_name" : "",
+                "usr" : "c:@F@sgn#I#"
+            }
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.cpp",
+        "file_last_write" : 1467900064
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/Jacob/Library/Mobile Documents/com~apple~CloudDocs/GitHub/Source/R/High-Dim Cointegration/HiDimCI/src/tools.h",
+        "file_last_write" : 1467900091
+    }
+]

@@ -1,0 +1,82 @@
+library(HiDimCI)
+library(misc)
+library(Matrix)
+library(doParallel)
+filelib = icloud_lib("GitHub/Source/R/packages/HiDimCI/")
+clean_up(filelib)
+set.seed(1234)
+
+make_batch <- function(nrep, ncores){
+  # Setup list of batches (individual B-samples to send to workers)
+  b0 = ncores # desired number of batches
+  b1 = nrep %% b0
+  b2 = floor(nrep/b0)
+  b  = c(rep(b2,b0)) # this is the list of smaller bootstrap samples to send to workers
+
+  if(b1>0){ # not all B samples have been distributed in each batch, iterate until all have been placed
+    btmp = b1
+    i=1
+    while(btmp>0){
+      b[i] = b[i]+1 # place 1 sample in a batch and move on to the next one, until all are placed
+      i = i+1
+      btmp = btmp-1
+    }
+  }
+  return(b)
+}
+make_angles <- function(N,p,d,sig){
+  B   = as.matrix(HiDimCI::Kuramoto.matrix(p,d))
+  X   = HiDimCI::sampleX(B,N,sig)
+  out = numeric(p)
+  for(i in 1:p){
+    M      = HiDimCI::johansen(X,i)
+    P      = M$alpha%*%t(M$beta)
+    out[i] = acos(HiDimCI::matrix_angle(P,B))
+  }
+  return(out)
+}
+save_angles <- function(N,p,d,sig, nrep = 300){
+
+  b = make_batch(nrep,ncores=8)
+
+  # Parallel part:
+  cl= makeCluster(length(b), setup_timeout=.5)
+  parallel::clusterExport(cl, c("make_angles","N","p","d","sig"))
+  tmp = parallel::parLapply(cl, b, function(i){
+    out = replicate(i, make_angles(N,p,d, sig))
+    return(out)
+  })
+  stopCluster(cl)
+
+  Mtmp = numeric(0)
+  for(i in 1:length(tmp)){
+    Mtmp = cbind(Mtmp,tmp[[i]])
+  }
+  M_angles = Mtmp
+
+  filename  = paste0(filelib,"data/angles_N",N,"_p",p,"_d",d,"_sig",sig,".Rda")
+  filename = sub("\\.","",filename)
+  save(M_angles, file=filename)
+}
+
+N   = 200
+p   = 10
+d   = 3
+sig = 1
+# save_angles(N,p,d,sig)
+# load(paste0(filelib,"data/angles_N",N,"_p",p,"_d",d,"_sig",sig,".Rda"))
+
+p = 100
+d = 8
+for(N in c(500,1000,2000)){
+  for(sig in c(.1,.5,1,2,5)){
+    cat("\nN:",N,"sig:",sig,"\n")
+    system.time({
+      save_angles(N,p,d,sig)
+    })
+  }
+  msg = paste0("N=",N," sig=",sig," done!")
+  notify(msg)
+}
+notify("All angles done!")
+

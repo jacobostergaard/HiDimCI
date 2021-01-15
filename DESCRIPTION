@@ -1,0 +1,14 @@
+Package: HiDimCI
+Type: Package
+Title: Toolbox for high-dimensional cointegration study
+Version: 0.1.0
+Date: 2017-09-15
+Authors@R: person("Jacob", "Ostergaard", email = "ostergaard@math.ku.dk", role = c("aut", "cre"))
+Description: A set of tools for high-dimensional cointegration
+Depends: R(>= 3.1.0)
+License: GPL-3
+LazyData: TRUE
+Imports: Rcpp (>= 0.11.0), Matrix
+LinkingTo: Rcpp, RcppArmadillo
+
+
